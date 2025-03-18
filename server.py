@@ -9,6 +9,7 @@
 from flask import Flask, request, jsonify
 from googletrans import Translator
 from flask_cors import CORS
+import os  # Import os to get Render's assigned port
 
 app = Flask(__name__)
 CORS(app)  # Allows cross-origin requests (React Native needs this)
@@ -32,4 +33,5 @@ def translate_text():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    port = int(os.environ.get("PORT", 10000))  # Render assigns a dynamic port
+    app.run(host='0.0.0.0', port=port, debug=True)
